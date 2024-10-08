@@ -1,0 +1,108 @@
+1). What is garbage collection in the context of Python, and why is it important? Can you explain how memory management is handled in Python?
+
+Garbage collection in Python is part of the automatic memory management system that ensures unused or unnecessary objects (like variables, data structures) are deleted to free up memory. It's important because it helps prevent memory leaks and reduces the need for manual memory management, which can be error-prone.
+
+Python uses reference counting and a cyclic garbage collector for memory management:
+
+Reference Counting: Each object has a reference count, i.e., a count of how many times it's being referred to. When this count reaches zero (i.e., no variable or object points to it), the memory is released.
+Cyclic Garbage Collection: Some objects may reference each other, creating a cycle, making their reference count non-zero even when they're not needed. Python’s cyclic garbage collector identifies such objects and reclaims their memory.
+Importance: Automatic garbage collection makes Python memory-efficient and developer-friendly, ensuring that developers don't have to manually manage memory, which is critical for error-free execution, especially in large applications.
+
+
+2). What are the key differences between NumPy arrays and Python lists, and can you explain the advantages of using NumPy arrays in numerical computations?
+
+Key Differences:
+Performance: NumPy arrays are faster than Python lists, especially for numerical computations. This is because NumPy arrays store elements in contiguous memory blocks, allowing vectorized operations and optimizations at a lower level.
+Data Types: NumPy arrays hold elements of the same data type, while Python lists can store elements of mixed data types.
+Memory Efficiency: NumPy arrays consume less memory because of their uniform data type and more efficient storage.
+Built-in Operations: NumPy supports element-wise operations directly, like addition, multiplication, etc., which is faster compared to using loops on lists.
+Advantages of NumPy Arrays:
+Speed: Array operations are executed faster.
+Convenience: Built-in functions like np.sum(), np.mean(), and broadcasting make it easier to perform mathematical operations on entire arrays.
+Memory-efficient: Due to uniform data type storage.
+
+Example:
+
+import numpy as np
+
+arr = np.array([1, 2, 3])
+lst = [1, 2, 3]
+
+# Element-wise addition with NumPy
+arr_result = arr + 2  # Output: array([3, 4, 5])
+
+# Doing the same with Python lists would require loops
+lst_result = [x + 2 for x in lst]  # Output: [3, 4, 5]
+
+
+3). How does list comprehension work in Python, and can you provide an example of using it to generate a list of squared values or filter a list based on a condition?
+
+List comprehension is a concise way to create lists in Python. It allows for generating a new list by applying an expression to each element in an iterable (like a list or range), with optional conditions.
+Example: Generate a list of squared values:
+
+squared_values = [x**2 for x in range(10)]
+print(squared_values)  # Output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+Example: Filter a list based on a condition (e.g., even numbers):
+
+
+even_numbers = [x for x in range(20) if x % 2 == 0]
+print(even_numbers)  # Output: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+
+
+4). Can you explain the concepts of shallow and deep copying in Python, including when each is appropriate, and how deep copying is implemented?
+
+Shallow Copy: A shallow copy creates a new object but doesn't recursively copy all objects within it. For example, in a list of lists, a shallow copy will create a new outer list, but the inner lists will still reference the original lists. You can use Python’s copy() method for shallow copies.
+
+Deep Copy: A deep copy creates a completely independent object, including recursively copying all objects within. If you deep copy a list of lists, both the outer list and inner lists are new, independent objects. You can use the copy module's deepcopy() function for deep copies.
+
+Example:
+
+import copy
+
+# Original list with nested list
+original_list = [[1, 2], [3, 4]]
+
+# Shallow copy
+shallow_copied_list = copy.copy(original_list)
+
+# Deep copy
+deep_copied_list = copy.deepcopy(original_list)
+
+# Modifying the shallow copy (affects the original's inner lists)
+shallow_copied_list[0][0] = 10
+print(original_list)  # Output: [[10, 2], [3, 4]] (shallow copy shares inner lists)
+
+# Modifying the deep copy (does not affect the original)
+deep_copied_list[0][0] = 20
+print(original_list)  # Output: [[10, 2], [3, 4]] (deep copy is fully independent)
+
+When to Use:
+
+Shallow Copy: When the internal objects do not need to be copied independently (e.g., if the list contains immutable objects like integers).
+Deep Copy: When you need a completely independent copy, including inner objects, such as lists of lists or other mutable objects.
+
+
+5). Explain with examples the difference between list and tuples.
+
+Mutability: List are mutable (can change after creation)	while tuples are immutable (cannot change once created)
+Syntax:	List uses square brackets [1, 2, 3]	while tuples uses parentheses (1, 2, 3)
+Performance:	List have performance lower due to mutability	while tuples perform faster due to immutability
+Use Case:	List are suitable for collections of data that can change	while tuples are suitable for fixed collections of data
+Methods:	Lists have many methods like append(), remove() while	Tuples have fewer methods since they cannot change
+
+
+Example:
+
+# List example
+my_list = [1, 2, 3]
+my_list.append(4)  # Allowed
+print(my_list)  # Output: [1, 2, 3, 4]
+
+# Tuple example
+my_tuple = (1, 2, 3)
+# my_tuple.append(4)  # Raises AttributeError (tuples don't have append)
+When to Use:
+
+Lists: When you need a collection that might change over time.
+Tuples: When you need a collection that remains constant (e.g., coordinates, or database keys).
